@@ -1,19 +1,25 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Login from '../Pages/Login';
-import ErrorPage from '../Pages/ErrorPage';
-import Home from '../Pages/Home';
+import { createBrowserRouter } from "react-router-dom";
+import Cookies from "js-cookie";
+import Login from "../Pages/Login";
+import ErrorPage from "../Pages/ErrorPage";
+import Home from "../Pages/Home";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
         path: "/login",
-        element: <Login />
+        element: <Login />,
     },
     {
-        path:"/home",
-        element:<Home />
+        path: "/home",
+        element: (
+            <ProtectedRoute>
+                <Home />
+            </ProtectedRoute>
+        ),
     },
     {
         path: "*",
-        element: <ErrorPage /> // Custom Error Page
-    }
+        element: <ErrorPage />, // Custom Error Page
+    },
 ]);
