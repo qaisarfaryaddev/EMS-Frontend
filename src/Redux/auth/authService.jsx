@@ -30,8 +30,31 @@ const appLogin = async (userData) => {
     }
 };
 
+
+
+const Logout_Api = "http://localhost:5000/api/v1/logout";
+
+// Update the appLogin function to include `withCredentials: true`
+const Logout = async () => {
+    try {
+        const response = await axios.get(Logout_Api,{
+            withCredentials:true
+        });
+        if (response.data) {
+            return response.data;
+        }
+        ;
+
+       
+    } catch (error) {
+        console.error("Error logging out:", error);
+        throw error;
+    }
+};
+
 const authService = {
     appLogin,
+    Logout,
 };
 
 export default authService;
