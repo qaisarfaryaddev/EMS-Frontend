@@ -29,9 +29,9 @@ const Navbar = () => {
           {/* EMS Display */}
           <div className="flex-shrink-0">
             <h1 className="text-2xl sm:text-3xl font-bold flex space-x-1">
-              <span className="text-red-500">E</span>
-              <span className="text-blue-500">M</span>
-              <span className="text-green-500">S</span>
+              <span className="text-white">FDMS</span>
+              {/* <span className="text-blue-500">M</span>
+              <span className="text-green-500">S</span> */}
             </h1>
           </div>
 
