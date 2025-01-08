@@ -19,8 +19,9 @@ export function DataTable({ columns, data }) {
   const [columnFilters, setColumnFilters] = React.useState([]);
 
   // Filter out the `sr` column from the filters
-  const filteredColumns = columns.filter(column => column.accessorKey !== 'sr');
-
+  const filteredColumns = columns.filter(
+    (column) => column.accessorKey !== "sr" && column.accessorKey !== "shift"
+  );
   const table = useReactTable({
     data,
     columns,
@@ -43,35 +44,37 @@ export function DataTable({ columns, data }) {
 
   return (
     <div className="rounded-md border overflow-x-auto bg-white shadow-lg ">
-      {/* Filtering Section */}
-      <div className="flex justify-center items-center py-4 space-x-4 mb-10">
-        <div className="text-gray-600 font-sans tracking-widest font-bold">Filter:</div>
-        {filteredColumns.map((column) => (
-          column.accessorKey && (
-            <div key={column.accessorKey} className="flex items-center">
-              <Input
-                placeholder="Filter..."
-                value={(table.getColumn(column.accessorKey)?.getFilterValue() || "")}
-                onChange={(e) =>
-                  table.getColumn(column.accessorKey)?.setFilterValue(e.target.value)
-                }
-                className="max-w-xs"
-              />
-            </div>
-          )
-        ))}
-      </div>
+  {/* Filtering Section */}
+  <div className="flex justify-center items-center pt-4 space-x-4 mb-10">
+    <div className="text-gray-600 font-sans tracking-widest font-bold">Filters:</div>
+    {filteredColumns.map((column) => (
+      column.accessorKey && (
+        <div key={column.accessorKey} className="flex items-center">
+          <Input
+            placeholder={`Filter by ${column.header instanceof Function 
+              ? column.header({ column }).props.children[0] 
+              : column.header || column.accessorKey}`}
+            value={(table.getColumn(column.accessorKey)?.getFilterValue() || "")}
+            onChange={(e) =>
+              table.getColumn(column.accessorKey)?.setFilterValue(e.target.value)
+            }
+            className="max-w-xs"
+          />
+        </div>
+      )
+    ))}
+  </div>
 
       {/* Table */}
       <Table className="min-w-full table-auto">
         {/* Table Header */}
-        <TableHeader className="bg-[#222831]">
+        <TableHeader className="bg-[#222831] text-left">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  className="px-4 py-2 text-left font-semibold tracking-wide text-white"
+                  className=" py-2 font-semibold tracking-wide text-white"
                 >
                   {header.isPlaceholder
                     ? null
@@ -85,16 +88,16 @@ export function DataTable({ columns, data }) {
         {/* Table Body */}
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+            table.getRowModel().rows.map((row,index) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="border-t hover:bg-gray-100"
+                className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} border-t `}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
-                    className="px-4 py-2 text-sm text-gray-600 uppercase"
+                    className="px-6  text-sm text-gray-700"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

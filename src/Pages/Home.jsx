@@ -14,7 +14,7 @@ const Home = () => {
   // Preprocess employees to add a serial number
   const employeesWithSr = employees.map((employee, index) => ({
     ...employee,
-    sr: index + 1, // Adding serial number
+    sr: index + 1, 
   }));
 
   useEffect(() => {

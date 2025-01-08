@@ -34,6 +34,9 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
+    cell: ({ row }) => (
+      <span className="uppercase text-bold text-black">{row.getValue("employeName")}</span>
+    ),
   },
   {
     accessorKey: "designation", // Matches the key in the data
@@ -48,7 +51,7 @@ export const columns = [
     ),
   },
   {
-    accessorKey: "batch", // Matches the key in the data
+    accessorKey: "batch",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -82,12 +85,27 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
+    cell: ({ row }) => (
+      <span className="uppercase">{row.getValue("posting")}</span>
+    ),
+  },
+  {
+    accessorKey: "shift",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Duty Shift
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const employee = row.original; // Access the row data here
+      const employee = row.original;
 
       return (
         <DropdownMenu>

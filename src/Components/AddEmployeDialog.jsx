@@ -18,7 +18,8 @@ import {
 } from "@/Components/components/ui/select"; // ShadCN Select components
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployee, reset } from "../Redux/Employe/addEmployeSlice";
-import { toast, ToastContainer } from 'react-toastify'; // Import Toastify
+import { toast, ToastContainer } from 'react-toastify'; 
+import { policeStation } from "../utils/constants";
 
 // Import Toastify styles
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,6 +32,7 @@ const AddEmployeeDialog = () => {
     batch: "",
     phoneNumber: "",
     posting: "",
+    shift:""
   });
 
   const [errors, setErrors] = useState({
@@ -51,6 +53,7 @@ const AddEmployeeDialog = () => {
       batch: "",
       phoneNumber: "",
       posting: "",
+      shift:""
     });
     setErrors({ designation: false, batch: false });
     dispatch(reset());
@@ -68,17 +71,18 @@ const AddEmployeeDialog = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { designation, batch } = employeeData;
+    const { designation, batch,shift } = employeeData;
 
     // Validate select fields
     const hasErrors = {
       designation: !designation,
       batch: !batch,
+      shift:!shift
     };
 
     setErrors(hasErrors);
 
-    if (hasErrors.designation || hasErrors.batch) {
+    if (hasErrors.designation || hasErrors.batch || hasErrors.shift) {
       return;
     }
 
@@ -95,10 +99,10 @@ const AddEmployeeDialog = () => {
     }
   };
 
-  // Handle dialog close (without submission)
+  
   const handleDialogClose = () => {
     setOpen(false);
-    resetFormData(); // Reset form data
+    resetFormData(); 
   };
 
   return (
@@ -219,17 +223,56 @@ const AddEmployeeDialog = () => {
             {/* Current Posting Field */}
             <div>
               <label htmlFor="posting" className="block">
-                Posting
+                Police Station
               </label>
-              <Input
-                type="text"
-                id="posting"
-                name="posting"
+              <Select
                 value={employeeData.posting}
-                onChange={handleInputChange}
-                className="w-full"
-                required
-              />
+                onValueChange={(value) =>
+                  setEmployeeData({ ...employeeData, posting: value })
+                }
+              >
+                <SelectTrigger
+                  className={`w-full ${errors.posting ? "border-red-500" : ""}`}
+                >
+                  <SelectValue placeholder="Select Police Station" />
+                </SelectTrigger>
+                <SelectContent>
+                  {policeStation.map((station, index) => (
+                    <SelectItem key={index} value={station}>
+                      {station}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.posting && (
+                <p className="text-red-500 text-sm">Police Station is required.</p>
+              )}
+            </div>
+                {/* shift */}
+            <div>
+              <label htmlFor="shift" className="block">
+                Duty Shift
+              </label>
+              <Select
+                value={employeeData.shift}
+                onValueChange={(value) =>
+                  setEmployeeData({ ...employeeData, shift: value })
+                }
+              >
+                <SelectTrigger
+                  className={`w-full ${errors.shift ? "border-red-500" : ""}`}
+                >
+                  <SelectValue placeholder="Select Duty Shift" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Morning">Morning</SelectItem>
+                  <SelectItem value="Evening">Evening</SelectItem>
+                  <SelectItem value="Night">Night</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.shift && (
+                <p className="text-red-500 text-sm">Duty Shift is required.</p>
+              )}
             </div>
 
             {/* Submit Button */}
