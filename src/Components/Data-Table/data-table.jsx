@@ -43,9 +43,8 @@ export function DataTable({ columns, data }) {
   });
 
   return (
-    <div className="rounded-md border overflow-x-auto bg-white shadow-lg ">
-  {/* Filtering Section */}
-  <div className="flex justify-center items-center pt-4 space-x-4 mb-10">
+    <div className="rounded-md overflow-x-auto bg-white shadow-lg ">
+  <div className="flex justify-center  items-center pt-4 space-x-2 mb-10">
     <div className="text-gray-600 font-sans tracking-widest font-bold">Filters:</div>
     {filteredColumns.map((column) => (
       column.accessorKey && (

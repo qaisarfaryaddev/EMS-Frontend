@@ -26,9 +26,12 @@ const Home = () => {
   }, [dispatch]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+            <div className="w-16 h-16 border-4 border-t-transparent border-blue-800 border-solid rounded-full animate-spin"></div>
+          </div>
+    );
   }
-
   if (isError) {
     return <p>Error: {message}</p>;
   }

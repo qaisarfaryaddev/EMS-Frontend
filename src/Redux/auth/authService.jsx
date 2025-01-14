@@ -1,21 +1,16 @@
-import axios from "axios";
+import axiosApi from '../../Axios/axios';
 
-const API_APP = "http://localhost:5000/api/v1/login";
 
-// Update the appLogin function to include `withCredentials: true`
+
 const appLogin = async (userData) => {
     try {
-        const response = await axios.post(API_APP, userData, {
-            withCredentials: true, // Ensures cookies are sent and received
-        });
+        const response = await axiosApi.post('/api/v1/login', userData);
 
         if (response.data) {
             console.log("Login response:", response.data);
 
-            // Extract the token from the cookie if sent as a cookie by the backend
             const token = response.data.token;
             console.log("token", token)
-            // Store the token in local storage
             if (token) {
                 localStorage.setItem("authToken", token);
             } else {

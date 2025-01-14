@@ -1,12 +1,8 @@
-import axios from "axios";
-
-const API_APP = "http://localhost:5000/api/v1/getEmploye";
+import axiosApi from '../../Axios/axios';
 
 const getEmployees = async () => {
     try {
-        const response = await axios.get(API_APP, {
-            withCredentials: true, 
-        });
+        const response = await axiosApi.get('/api/v1/getEmploye');
 
         if (response.data) {
             return response.data;

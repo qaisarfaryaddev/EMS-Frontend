@@ -5,7 +5,7 @@ const EmployeListing = () => {
   return (
     <div className='p-2 rounded-lg'>
       <div>
-        <AddEmployeDialog /> {/* Add dialog component here */}
+        <AddEmployeDialog /> 
       </div>
     </div>
   );

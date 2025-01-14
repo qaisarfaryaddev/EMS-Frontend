@@ -18,11 +18,12 @@ import {
 } from "@/Components/components/ui/select"; // ShadCN Select components
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployee, reset } from "../Redux/Employe/addEmployeSlice";
-import { toast, ToastContainer } from 'react-toastify'; 
+import { toast, ToastContainer } from "react-toastify";
 import { policeStation } from "../utils/constants";
+import { getEmployees } from "../Redux/Employe/getEmployeSlice";
 
 // Import Toastify styles
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const AddEmployeeDialog = () => {
   const [open, setOpen] = useState(false);
@@ -32,12 +33,13 @@ const AddEmployeeDialog = () => {
     batch: "",
     phoneNumber: "",
     posting: "",
-    shift:""
+    shift: "",
   });
 
   const [errors, setErrors] = useState({
     designation: false,
     batch: false,
+    shift: false,
   });
 
   const dispatch = useDispatch();
@@ -53,9 +55,9 @@ const AddEmployeeDialog = () => {
       batch: "",
       phoneNumber: "",
       posting: "",
-      shift:""
+      shift: "",
     });
-    setErrors({ designation: false, batch: false });
+    setErrors({ designation: false, batch: false, shift: false });
     dispatch(reset());
   };
 
@@ -71,13 +73,13 @@ const AddEmployeeDialog = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { designation, batch,shift } = employeeData;
+    const { designation, batch, shift } = employeeData;
 
     // Validate select fields
     const hasErrors = {
       designation: !designation,
       batch: !batch,
-      shift:!shift
+      shift: !shift,
     };
 
     setErrors(hasErrors);
@@ -86,23 +88,21 @@ const AddEmployeeDialog = () => {
       return;
     }
 
-    // Dispatch addEmployee action
     try {
       await dispatch(addEmployee(employeeData));
-      console.log("Submitting Employee Data:", employeeData);
-      setOpen(false); // Close dialog on success
-      resetFormData(); // Reset form
-      toast.success("Employee added successfully!"); // Show success message using Toastify
+      setTimeout(() => {
+        dispatch(getEmployees());
+        setOpen(false); 
+      }, 500);
     } catch (error) {
       console.error("Error adding employee:", error);
-      toast.error("Failed to add employee!"); // Show error message using Toastify
+      toast.error("Failed to add employee!");
     }
   };
 
-  
   const handleDialogClose = () => {
     setOpen(false);
-    resetFormData(); 
+    resetFormData();
   };
 
   return (
@@ -118,7 +118,9 @@ const AddEmployeeDialog = () => {
         }}
       >
         <DialogTrigger asChild>
-          <Button disabled={isLoading}>Add Employee</Button>
+          <Button disabled={isLoading}>
+            {isLoading ? "Loading..." : "Add Employee"}
+          </Button>
         </DialogTrigger>
 
         <DialogContent>
@@ -172,7 +174,7 @@ const AddEmployeeDialog = () => {
               )}
             </div>
 
-            {/* Batch Dropdown */}
+            {/* Batch Field */}
             <div>
               <label htmlFor="batch" className="block">
                 Batch
@@ -204,7 +206,7 @@ const AddEmployeeDialog = () => {
               )}
             </div>
 
-            {/* Cell No. Field */}
+            {/* Phone Number */}
             <div>
               <label htmlFor="phoneNumber" className="block">
                 Phone Number
@@ -220,7 +222,7 @@ const AddEmployeeDialog = () => {
               />
             </div>
 
-            {/* Current Posting Field */}
+            {/* Police Station */}
             <div>
               <label htmlFor="posting" className="block">
                 Police Station
@@ -245,10 +247,13 @@ const AddEmployeeDialog = () => {
                 </SelectContent>
               </Select>
               {errors.posting && (
-                <p className="text-red-500 text-sm">Police Station is required.</p>
+                <p className="text-red-500 text-sm">
+                  Police Station is required.
+                </p>
               )}
             </div>
-                {/* shift */}
+
+            {/* Shift Field */}
             <div>
               <label htmlFor="shift" className="block">
                 Duty Shift
@@ -284,9 +289,6 @@ const AddEmployeeDialog = () => {
           </form>
 
           {isError && <p className="text-red-500 mt-4">{message}</p>}
-          {isSuccess && (
-            <p className="text-green-500 mt-4">Employee added successfully!</p>
-          )}
         </DialogContent>
       </Dialog>
 
