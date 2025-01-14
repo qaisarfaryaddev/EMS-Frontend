@@ -11,7 +11,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { employees, isLoading, isError, message } = useSelector((state) => state.getEmployees);
 
-  // Preprocess employees to add a serial number
   const employeesWithSr = employees.map((employee, index) => ({
     ...employee,
     sr: index + 1, 
@@ -19,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
-
+    console.log(import.meta.env.VITE_API_URL);
     return () => {
       dispatch(reset());
     };
