@@ -31,11 +31,8 @@ const appLogin = async (userData) => {
 // Update the appLogin function to include `withCredentials: true`
 const Logout = async () => {
     try {
-        const response = await axiosApi.get('/api/v1/logout',{
-            withCredentials:true
-        });
+        const response = await axiosApi.get('/api/v1/logout');
         if (response.data) {
-            console.log(response.data)
             return response.data;
         }
         ;
