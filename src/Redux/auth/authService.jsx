@@ -27,12 +27,11 @@ const appLogin = async (userData) => {
 
 
 
-const Logout_Api = "http://localhost:5000/api/v1/logout";
 
 // Update the appLogin function to include `withCredentials: true`
 const Logout = async () => {
     try {
-        const response = await axios.get(Logout_Api,{
+        const response = await axios.get('/api/v1/logout',{
             withCredentials:true
         });
         if (response.data) {
