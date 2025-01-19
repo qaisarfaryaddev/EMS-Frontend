@@ -4,6 +4,7 @@ import Login from "../Pages/Login";
 import ErrorPage from "../Pages/ErrorPage";
 import Home from "../Pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
+import Mistakes from "../Pages/Mistakes/Mistakes";
 
 export const router = createBrowserRouter([
     {
@@ -15,6 +16,14 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <Home />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/mistakes",
+        element: (
+            <ProtectedRoute>
+                <Mistakes />
             </ProtectedRoute>
         ),
     },

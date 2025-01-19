@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { appLogout,resetLogoutState } from "../Redux/auth/logoutSlice";
 import {  useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Mistakes from "../Pages/Mistakes/Mistakes";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 
@@ -28,8 +30,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* EMS Display */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl sm:text-3xl font-bold flex space-x-1">
-              <span className="text-white">FDMS</span>
+            <h1 className="text-xl sm:text-xl font-bold flex space-x-1">
+              <span className="text-white ">FrontDesk Management System</span>
               {/* <span className="text-blue-500">M</span>
               <span className="text-green-500">S</span> */}
             </h1>
@@ -62,12 +64,8 @@ const Navbar = () => {
           <div className="hidden sm:flex sm:items-center sm:space-x-6">
             {/* Links */}
             <div className="space-x-4">
-              <a href="#" className="hover:text-blue-400 font-sans ">
-                DASHBOARD
-              </a>
-              <a href="#" className="hover:text-blue-400">
-                PUNISHMENT
-              </a>
+            <Link to={"/home"}>DASHBOARD</Link>
+              <Link to={"/mistakes"}>MISTAKES</Link>
               <a href="#" className="hover:text-blue-400">
                 LEAVE
               </a>
@@ -84,12 +82,8 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="sm:hidden bg-gray-700">
           <div className="space-y-2 p-4">
-            <a href="#" className="block text-white hover:text-blue-400">
-              Employe
-            </a>
-            <a href="#" className="block text-white hover:text-blue-400">
-              Punishment
-            </a>
+          <Link to={"/home"}>DASHBOARD</Link>
+            <Link to={"/mistakes"}>MISTAKES</Link>
             <a href="#" className="block text-white hover:text-blue-400">
               Leave
             </a>
