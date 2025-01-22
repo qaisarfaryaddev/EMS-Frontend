@@ -56,7 +56,7 @@ const Login = () => {
       <div className="w-full max-w-sm">
         <form className="bg-white shadow-md rounded px-8 pb-8 mb-4" onSubmit={onSubmit}>
           <h1 className="text-center pb-5 pt-5 text-xl font-bold font-sans text-cyan-900">
-            Employee Management System
+            FrontDesk Management System
           </h1>
 
           <div className="mb-4">
