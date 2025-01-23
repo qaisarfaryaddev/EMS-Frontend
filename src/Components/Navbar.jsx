@@ -14,15 +14,17 @@ const Navbar = () => {
   
   const handleLogout = async () => {
     try {
-        dispatch(appLogout());
-        navigate('/login');        
-        dispatch(resetLogoutState());
+      localStorage.removeItem("token");
+  
+      navigate("/login");
+  
+      dispatch(resetLogoutState());
     } catch (error) {
-        console.error("Logout Failed:", error);
-        dispatch(resetLogoutState());
+      console.error("Logout Failed:", error);
+      dispatch(resetLogoutState());
     }
-
   };
+  
 
   return (
     <nav className="bg-gray-800 text-white">

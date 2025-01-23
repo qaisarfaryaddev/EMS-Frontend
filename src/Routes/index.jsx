@@ -28,6 +28,10 @@ export const router = createBrowserRouter([
         ),
     },
     {
+        path:'/test',
+        element:(<div>auth free</div>)
+    },
+    {
         path: "*",
         element: <ErrorPage />, // Custom Error Page
     },
